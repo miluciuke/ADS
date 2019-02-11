@@ -73,16 +73,18 @@ public class quickSort {
 	//1c) quicksort implementation using median of 3 as pivot
 	public static int[] sortMedian(int a[], int p, int r){
 		if (p<r) {
-			int q = median(a,p,r);
-			sort(a,p,q-1);
-			sort(a,q+1,r);
+		    median(a,p,r);
+			int q = partition(a,p,r);
+			sortMedian(a,p,q-1);
+			sortMedian(a,q+1,r);
 		}
 		return a;
 	}
 	
 	//1c) algorithm to choose the median of 3 points
 	//provided 2 positions in the array, it finds the position in the midle and then chooses the median
-	public static int median(int a[], int b, int c) {
+	//eventually it swaps the median and last members of the array so partition function can be called
+	public static void median(int a[], int b, int c) {
 		int mid = (c+b)/2;
 		if (a[c]<a[b]) {
 			int x = a[b];
@@ -99,8 +101,10 @@ public class quickSort {
 			a[mid]=a[c];
 			a[c]=x;
 		}
+		int l = a[mid];
+		a[mid] = a[c];
+		a[c] = l;
 		
-		return mid;
 	}
 	
 	//1d)3-WAY-QUICK-SORT
